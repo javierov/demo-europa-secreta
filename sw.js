@@ -1,6 +1,6 @@
 /* Europa secreta: guarda la app en el móvil para usarla sin internet */
-const V = "europa-secreta-v2";
-const FILES = ["./", "index.html", "manifest.json", "icono.png", "apple-touch-icon.png",
+const V = "europa-secreta-v3";
+const FILES = ["./", "index.html", "manifest.json", "icono.png", "icono-192.png", "favicon-32.png", "apple-touch-icon.png",
   "fotos/madrid.jpg", "fotos/florencia.jpg", "fotos/venecia.jpg", "fotos/paris.jpg",
   "fotos/toledo.jpg", "fotos/siena.jpg", "fotos/burano.jpg", "fotos/provins.jpg", "fotos/versalles.jpg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
