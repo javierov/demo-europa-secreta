@@ -22,7 +22,7 @@
 :root{color-scheme:light dark;
 --bg:light-dark(#ebe1d3,#121014);--ink:light-dark(#1b1a1f,#f4f1ee);--soft:light-dark(#77737d,#a8a3ad);--line:light-dark(#ddd1c1,#2a2630);
 --card:light-dark(#ffffff,#1d1a21);--tint:light-dark(#f4eee6,#26222b);--coral:#f26b45;--coralT:light-dark(#fde9e2,#3a2420);--dark:#1f1d22;
---mad:#d4523f;--flo:#4f8a5b;--ven:#2a8aa6;--par:#6c5fc7;--gold:#f5b53d}
+--band:light-dark(#22325a,#1f2d52);--mad:#d4523f;--flo:#4f8a5b;--ven:#2a8aa6;--par:#6c5fc7;--gold:#f5b53d}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 html{-webkit-tap-highlight-color:transparent}
@@ -38,34 +38,35 @@ section[hidden]{display:none}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
 .ph img.ok{opacity:1}
 .scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0/0) 40%,rgb(0 0 0/.62))}
-.bnr{position:relative;height:64px;margin:0 20px 12px;border-radius:18px;overflow:hidden;background:#3a2a3a}
+.bnr{position:relative;height:46px;margin:0 20px;border-radius:14px;overflow:hidden;background:#1d2a4a}
 .bnr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:bf 16s infinite}
 .bnr img:nth-child(2){animation-delay:4s}.bnr img:nth-child(3){animation-delay:8s}.bnr img:nth-child(4){animation-delay:12s}
 @keyframes bf{0%{opacity:0;transform:scale(1.12)}6%{opacity:1}25%{opacity:1}31%{opacity:0;transform:scale(1)}100%{opacity:0}}
-.bnr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0/0) 35%,rgb(0 0 0/.55))}
-.rt{position:absolute;z-index:2;left:14px;right:96px;bottom:12px;height:14px;color:#fff}
+.bnr::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgb(18 30 66/.72),rgb(18 30 66/.45));z-index:1}
+.rt{position:absolute;z-index:2;left:14px;right:96px;top:50%;margin-top:-7px;height:14px;color:#fff}
 .rt::before{content:"";position:absolute;left:0;right:0;top:6px;border-top:2px dashed rgb(255 255 255/.75)}
 .rt span{position:absolute;top:2px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#fff;border:2.5px solid var(--coral)}
-.bcd{position:absolute;z-index:2;right:10px;top:50%;transform:translateY(-50%);background:rgb(255 255 255/.94);color:#1b1a1f;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;white-space:nowrap}
-.bcd b{color:var(--coral);font-weight:800}
+.bcd{position:absolute;z-index:2;right:8px;top:50%;transform:translateY(-50%);background:rgb(255 255 255/.94);color:#1b1a1f;border-radius:999px;padding:4px 10px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.bcd b{color:#1d2a4a;font-weight:800}
 .pl{position:absolute;top:-5px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:var(--coral);display:grid;place-items:center;animation:pv 16s infinite}
 .pl svg{width:14px;height:14px;transform:rotate(90deg)}
 @keyframes pv{0%,18%{left:0%}25%,43%{left:33.3%}50%,68%{left:66.6%}75%,93%{left:100%}100%{left:0%}}
 @media (prefers-reduced-motion:reduce){.bnr img,.pl{animation:none}.bnr img:first-child{opacity:1}.pl{left:0}}
 /* cabecera */
-.hd{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:center}
-.av{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffb37a,var(--coral));color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px}
-.hd small{display:block;color:var(--soft);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hd b{display:block;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:center;background:#1d2a4a;color:#fff;margin:10px -20px 0;padding:12px 20px}
+.av{width:44px;height:44px;border-radius:12px;background:rgb(255 255 255/.12);color:var(--gold);display:grid;place-items:center;font-weight:800;font-size:19px}
+.hd small{display:block;color:#b9c3dc;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd b{display:block;font-size:clamp(22px,6.4vw,27px);font-weight:800;letter-spacing:-.025em;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cd{background:var(--dark);color:#fff;border-radius:999px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:7px;white-space:nowrap}
 .cd i{width:28px;height:28px;border-radius:50%;background:var(--coral);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
 .cd span{font-size:13px;font-weight:600;line-height:1}
-h1{font-size:clamp(20px,5.6vw,26px);line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:12px 0 0;text-wrap:balance}
-.lead{color:var(--soft);margin:3px 0 0;font-size:14px}
+h1{font-size:clamp(26px,7vw,32px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin:20px 0 0;text-wrap:balance}
+.cities{font-size:clamp(16px,4.4vw,19px);line-height:1.25;letter-spacing:-.01em;font-weight:700;margin:14px 0 0;text-wrap:balance}
+.lead{color:var(--soft);margin:2px 0 0;font-size:13.5px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 20px 2px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chips button{flex:none;border:1.5px solid transparent;background:var(--card);box-shadow:0 1px 2px rgb(80 50 20/.08);border-radius:999px;padding:7px 15px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
-.chips button.on{background:var(--coral);border-color:var(--coral);color:#fff}
+.chips button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
 h2{font-size:21px;font-weight:700;letter-spacing:-.02em;margin:26px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
 h2 a,h2 button{font-size:14px;font-weight:600;color:var(--coral);background:none;border:0;cursor:pointer;text-decoration:none}
 /* carrusel */
@@ -213,7 +214,7 @@ input:focus,select:focus{outline:none;border-color:var(--coral)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));padding:0 max(16px,calc((100% - 520px)/2 + 16px)) env(safe-area-inset-bottom);background:var(--dark);border-radius:22px 22px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-items:center;z-index:9;box-shadow:0 -6px 20px -12px rgb(0 0 0/.4)}
 nav.tabs button{border:0;background:none;color:#a7a2ad;height:44px;width:64px;border-radius:22px;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
 nav.tabs svg{width:23px;height:23px}
-nav.tabs button[aria-selected=true]{background:var(--coral);color:#fff}
+nav.tabs button[aria-selected=true]{background:var(--gold);color:#1f1d22}
 :focus-visible{outline:3px solid color-mix(in srgb,var(--coral) 60%,transparent);outline-offset:2px}
 @media (prefers-reduced-motion:reduce){.sec.open .txt{animation:none}*{scroll-behavior:auto}}
 @media(min-width:600px){.car{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}.cc{width:auto;max-width:none}}
@@ -228,8 +229,8 @@ nav.tabs button[aria-selected=true]{background:var(--coral);color:#fff}
     <div class="rt"><span style="left:0"></span><span style="left:33.3%"></span><span style="left:66.6%"></span><span style="left:100%"></span><i class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></i></div><span class="bcd" id="count"></span></div>
   <div class="pad">
     <div class="hd"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div><div><small>Enero 2027</small><b>Europa secreta</b></div></div>
-    <h1>Madrid, Florencia, Venecia y París</h1>
-    <p class="lead">Del 4 al 25 de enero de 2027 · 21 noches</p>
+    <p class="cities">Madrid, Florencia, Venecia y París</p>
+    <p class="lead">Del 4 al 25 de enero · 21 noches</p>
   </div>
   <div class="chips" id="chips"></div>
   <div class="car" id="car"></div>
