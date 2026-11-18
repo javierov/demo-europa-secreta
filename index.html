@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ebe1d3">
+<title>El viaje de Jaime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE everyday, una app de viaje regalada, cálida y moderna
+   IDEA una app de viajes de verdad: tarjetas grandes de foto, hojas que suben, barra flotante
+   PICTURE el carrusel de ciudades con foto a toda tarjeta (ilustración provisional hasta tener fotos)
+   COLOUR marfil cálido / casi negro de noche, tinta casi negra, coral #f26b45 como acento, color por ciudad en los fondos
+   TYPE Plus Jakarta Sans en todo
+   LAYOUT columna de app de 520px centrada; en móvil, cabecera, carrusel, próximos días, barra oscura abajo */
+:root{color-scheme:light dark;
+--bg:light-dark(#ebe1d3,#121014);--ink:light-dark(#1b1a1f,#f4f1ee);--soft:light-dark(#77737d,#a8a3ad);--line:light-dark(#ddd1c1,#2a2630);
+--card:light-dark(#ffffff,#1d1a21);--tint:light-dark(#f4eee6,#26222b);--coral:#f26b45;--coralT:light-dark(#fde9e2,#3a2420);--dark:#1f1d22;
+--mad:#d4523f;--flo:#4f8a5b;--ven:#2a8aa6;--par:#6c5fc7;--gold:#f5b53d}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Plus Jakarta Sans",system-ui,sans-serif;overflow-x:clip}
+button{font:inherit;color:inherit}
+img{max-width:100%}
+.app{max-width:520px;margin:0 auto;padding:calc(12px + env(safe-area-inset-top)) 0 calc(88px + env(safe-area-inset-bottom))}
+.pad{padding:0 20px}
+section[hidden]{display:none}
+/* foto o ilustración */
+.ph{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--s1),var(--s2))}
+.ph>svg{position:absolute;inset:0;width:100%;height:100%}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.ph img.ok{opacity:1}
+.scrim::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0/0) 40%,rgb(0 0 0/.62))}
+.bnr{position:relative;height:64px;margin:0 20px 12px;border-radius:18px;overflow:hidden;background:#3a2a3a}
+.bnr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:bf 16s infinite}
+.bnr img:nth-child(2){animation-delay:4s}.bnr img:nth-child(3){animation-delay:8s}.bnr img:nth-child(4){animation-delay:12s}
+@keyframes bf{0%{opacity:0;transform:scale(1.12)}6%{opacity:1}25%{opacity:1}31%{opacity:0;transform:scale(1)}100%{opacity:0}}
+.bnr::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0/0) 35%,rgb(0 0 0/.55))}
+.rt{position:absolute;z-index:2;left:14px;right:96px;bottom:12px;height:14px;color:#fff}
+.rt::before{content:"";position:absolute;left:0;right:0;top:6px;border-top:2px dashed rgb(255 255 255/.75)}
+.rt span{position:absolute;top:2px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#fff;border:2.5px solid var(--coral)}
+.bcd{position:absolute;z-index:2;right:10px;top:50%;transform:translateY(-50%);background:rgb(255 255 255/.94);color:#1b1a1f;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:700;white-space:nowrap}
+.bcd b{color:var(--coral);font-weight:800}
+.pl{position:absolute;top:-5px;width:24px;height:24px;margin-left:-12px;border-radius:50%;background:var(--coral);display:grid;place-items:center;animation:pv 16s infinite}
+.pl svg{width:14px;height:14px;transform:rotate(90deg)}
+@keyframes pv{0%,18%{left:0%}25%,43%{left:33.3%}50%,68%{left:66.6%}75%,93%{left:100%}100%{left:0%}}
+@media (prefers-reduced-motion:reduce){.bnr img,.pl{animation:none}.bnr img:first-child{opacity:1}.pl{left:0}}
+/* cabecera */
+.hd{display:grid;grid-template-columns:40px minmax(0,1fr);gap:10px;align-items:center}
+.av{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#ffb37a,var(--coral));color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px}
+.hd small{display:block;color:var(--soft);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd b{display:block;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cd{background:var(--dark);color:#fff;border-radius:999px;padding:6px 12px 6px 6px;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.cd i{width:28px;height:28px;border-radius:50%;background:var(--coral);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px}
+.cd span{font-size:13px;font-weight:600;line-height:1}
+h1{font-size:clamp(20px,5.6vw,26px);line-height:1.15;letter-spacing:-.02em;font-weight:800;margin:12px 0 0;text-wrap:balance}
+.lead{color:var(--soft);margin:3px 0 0;font-size:14px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 20px 2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips button{flex:none;border:1.5px solid transparent;background:var(--card);box-shadow:0 1px 2px rgb(80 50 20/.08);border-radius:999px;padding:7px 15px;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.chips button.on{background:var(--coral);border-color:var(--coral);color:#fff}
+h2{font-size:21px;font-weight:700;letter-spacing:-.02em;margin:26px 0 12px;display:flex;justify-content:space-between;align-items:baseline}
+h2 a,h2 button{font-size:14px;font-weight:600;color:var(--coral);background:none;border:0;cursor:pointer;text-decoration:none}
+/* carrusel */
+.car{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:20px;padding:12px 20px 6px;scrollbar-width:none;align-items:flex-start}
+.car::-webkit-scrollbar{display:none}
+.cc{flex:none;width:calc((100% - 52px) / 2);max-width:230px;aspect-ratio:3/4;border-radius:22px;scroll-snap-align:start;cursor:pointer;border:0;padding:0;text-align:left;box-shadow:0 8px 18px -12px rgb(60 30 20/.45)}
+.cc .tx{position:absolute;left:12px;right:12px;bottom:12px;color:#fff;z-index:2}
+.cc .tx b{display:block;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.cc .tx span{display:flex;gap:4px;align-items:center;font-size:13px;white-space:nowrap;opacity:.95;margin-top:3px}
+.cc .tx span svg{width:14px;height:14px;color:var(--gold)}
+.go{position:absolute;top:10px;right:10px;z-index:2;width:32px;height:32px;border-radius:50%;background:#fff;color:#1b1a1f;display:grid;place-items:center}
+.go svg{width:16px;height:16px}
+.cc .n{position:absolute;top:12px;left:10px;z-index:2;background:rgb(255 255 255/.92);color:#1b1a1f;border-radius:999px;padding:3px 9px;font-size:12px;font-weight:700}
+/* filas de día */
+.rows{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:64px minmax(0,1fr) 22px;gap:14px;align-items:center;background:var(--card);border-radius:22px;padding:10px 14px 10px 10px;border:0;width:100%;text-align:left;cursor:pointer}
+.row .ph{width:64px;height:64px;border-radius:16px}
+.row b{display:block;font-weight:700;font-size:16px;line-height:1.25}
+.row small{display:block;color:var(--soft);font-size:14px}
+.row .dt{color:var(--coral);font-weight:700;font-size:13px}
+.row>svg{width:20px;height:20px;color:var(--soft)}
+.exc{display:flex;gap:12px;overflow-x:auto;padding:0 20px 6px;scrollbar-width:none}
+.exc::-webkit-scrollbar{display:none}
+.ex{flex:none;width:168px;border:0;padding:0;background:none;text-align:left;cursor:pointer}
+.ex .ph{height:120px;border-radius:22px}
+.ex b{display:block;margin-top:8px;font-weight:700}
+.ex small{color:var(--soft);font-size:14px}
+.promo{margin-top:26px;background:var(--dark);color:#fff;border-radius:28px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) 84px;gap:14px;align-items:center;overflow:hidden;position:relative}
+.promo b{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.15;display:block}
+.promo p{margin:6px 0 14px;color:#cfcad4;font-size:15px}
+.promo .stars{width:84px;height:84px;border-radius:24px;background:linear-gradient(135deg,#ffc56b,var(--coral));display:grid;place-items:center}
+.promo .stars svg{width:42px;height:42px;color:#fff}
+.btn{border:0;border-radius:999px;background:var(--coral);color:#fff;font-weight:700;font-size:16px;min-height:50px;padding:0 24px;cursor:pointer}
+.btn:hover{filter:brightness(1.05)}
+/* vista de ciudad */
+.hero{height:min(52vh,440px);margin-top:calc(-12px - env(safe-area-inset-top));border-radius:0 0 0 0}
+.hero .back{position:absolute;z-index:3;top:calc(16px + env(safe-area-inset-top));left:16px;width:48px;height:48px;border-radius:50%;background:rgb(255 255 255/.92);border:0;color:#1b1a1f;display:grid;place-items:center;cursor:pointer}
+.hero .back svg{width:22px;height:22px}
+.hero .tx{position:absolute;z-index:2;left:20px;right:20px;bottom:48px;color:#fff}
+.hero .tx b{display:block;font-size:clamp(34px,10vw,44px);font-weight:800;letter-spacing:-.03em;line-height:1.02}
+.hero .tx span{display:flex;gap:8px;align-items:center;margin-top:8px;font-weight:500}
+.hero .tx span svg{width:18px;height:18px;color:var(--gold)}
+.sheet{position:relative;z-index:3;margin-top:-28px;background:var(--bg);border-radius:30px 30px 0 0;padding:12px 20px 0}
+.grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 16px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stats div{background:var(--card);border-radius:20px;padding:12px 14px}
+.stats small{display:block;color:var(--soft);font-size:13px}
+.stats b{font-size:20px;font-weight:700;color:var(--coral);white-space:nowrap}
+.day{background:var(--card);border-radius:24px;margin-bottom:10px;overflow:hidden}
+.day>button{display:grid;grid-template-columns:56px minmax(0,1fr) 22px;gap:14px;align-items:center;width:100%;border:0;background:none;padding:12px 14px 12px 12px;text-align:left;cursor:pointer}
+.db{width:56px;height:60px;border-radius:18px;background:var(--coralT);color:var(--coral);display:grid;place-items:center;align-content:center;line-height:1}
+.db b{font-size:24px;font-weight:800}
+.db small{font-size:12.5px;font-weight:600;margin-top:2px}
+.day .t b{display:block;font-weight:700;line-height:1.25}
+.day .t small{color:var(--soft);font-size:14px}
+.chev{width:20px;height:20px;color:var(--soft);transition:transform .25s}
+.day.open .chev{transform:rotate(90deg)}
+.det{display:none;padding:0 16px 16px}
+.day.open .det{display:block}
+.steps{list-style:none;margin:0;padding:4px 0 0;display:grid;gap:12px}
+.steps li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.ic{width:40px;height:40px;border-radius:14px;background:var(--tint);color:var(--ink);display:grid;place-items:center}
+.ic svg{width:20px;height:20px}
+.steps .tx{padding-top:8px;font-size:15.5px}
+.lk{color:var(--coral);font-weight:700;text-decoration:none;white-space:nowrap}
+.prop{display:inline-block;font-size:12px;font-weight:700;color:#b8641a;background:#fff1dc;border-radius:999px;padding:2px 9px;margin-left:6px;white-space:nowrap}
+/* secreto */
+.sec{margin-top:14px;background:var(--dark);color:#fff;border-radius:22px;padding:16px;position:relative;overflow:hidden}
+.sec::before{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgb(242 107 69/.45),transparent 70%)}
+.sec .k{position:relative;display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--gold)}
+.sec .k svg{width:18px;height:18px}
+.sec .lock{position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px}
+.sec .lock p{margin:0;color:#cfcad4;font-size:15px}
+.sec .btn{min-height:44px;padding:0 18px;font-size:15px;flex:none}
+.sec .txt{display:none;position:relative}
+.sec h3{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:8px 0 4px;line-height:1.2}
+.sec .txt p{margin:0 0 8px;color:#e6e2ea;font-size:15.5px}
+.sec.open .lock{display:none}
+.sec.open .txt{display:block;animation:rv .5s ease-out}
+@keyframes rv{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* secretos */
+.prog{height:10px;border-radius:5px;background:var(--tint);overflow:hidden;margin:16px 0 6px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--coral));border-radius:5px;transition:width .4s}
+.note{color:var(--soft);font-size:14px;margin:0}
+.sgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sc{background:var(--card);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+.sc .ph{height:110px}
+.sc .ph .d{position:absolute;z-index:2;left:12px;top:12px;background:rgb(255 255 255/.92);color:#1b1a1f;border-radius:999px;padding:3px 10px;font-size:12.5px;font-weight:700}
+.sc .bd{padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.sc b{font-weight:700;line-height:1.25}
+.sc p{margin:0;font-size:14.5px;color:var(--soft)}
+.sc .open-b{margin-top:auto;border:0;border-radius:999px;background:var(--coralT);color:var(--coral);font-weight:700;min-height:42px;cursor:pointer}
+.sc.lockd .ph>img,.sc.lockd .ph>svg{filter:blur(6px) saturate(.6)}
+.sc.lockd .ph::before{content:"";position:absolute;inset:0;z-index:1;background:rgb(20 18 24/.35)}
+.lk2{position:absolute;z-index:2;inset:0;display:grid;place-items:center;color:#fff}
+.lk2 svg{width:30px;height:30px}
+/* práctico y gastos */
+.panel{background:var(--card);border-radius:24px;padding:16px}
+.legs{list-style:none;margin:0;padding:0}
+.legs li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.legs li:last-child{border:0}
+.legs small{display:block;color:var(--soft);font-size:14px}
+.legs .w{font-weight:700;color:var(--coral);white-space:nowrap;font-size:14px}
+.wx{display:grid;gap:12px}
+.wx .r{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;align-items:center}
+.wx .tr{position:relative;height:32px;border-radius:12px;background:var(--tint)}
+.wx .tr i{position:absolute;top:0;bottom:0;border-radius:12px;background:var(--c);display:flex;justify-content:space-between;align-items:center;padding:0 10px;color:#fff;font-size:13px;font-weight:700;white-space:nowrap;font-style:normal}
+.ax{display:flex;justify-content:space-between;font-size:13px;color:var(--soft);margin:6px 0 0 96px}
+.chk{display:flex;gap:12px;align-items:center;min-height:48px;border-bottom:1px solid var(--line);cursor:pointer}
+.chk:last-child{border:0}
+.chk input{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--line);flex:none;display:grid;place-items:center;cursor:pointer;margin:0}
+.chk input:checked{background:var(--coral);border-color:var(--coral)}
+.chk input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.chk:has(input:checked) span{text-decoration:line-through;color:var(--soft)}
+.phr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.phr h3{margin:0 0 10px;font-size:18px;font-weight:700;display:flex;gap:8px;align-items:center}
+.phr h3 i{width:12px;height:12px;border-radius:50%;background:var(--c)}
+.phr dl{margin:0;display:grid;gap:8px}
+.phr dt{font-weight:700;font-size:15px}
+.phr dd{margin:0;color:var(--soft);font-size:14px}
+.docs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.docs p{margin:0;font-size:15px}
+.big{font-size:44px;font-weight:800;letter-spacing:-.03em;color:var(--coral);line-height:1}
+input[type=text],input[type=number],select{font:16px "Plus Jakarta Sans",sans-serif;color:var(--ink);background:var(--tint);border:1.5px solid transparent;border-radius:16px;padding:12px 14px;min-height:50px;width:100%}
+input:focus,select:focus{outline:none;border-color:var(--coral)}
+.gtop{display:grid;grid-template-columns:140px minmax(0,1fr);gap:18px;align-items:center}
+.donut{width:140px;height:140px;border-radius:50%;display:grid;place-items:center}
+.donut>div{width:100px;height:100px;border-radius:50%;background:var(--card);display:grid;place-items:center;text-align:center;line-height:1.15}
+.donut b{font-size:19px;font-weight:800;display:block}
+.donut small{font-size:13px;color:var(--soft)}
+.gl{display:grid;gap:6px}
+.gl p{margin:0;display:grid;grid-template-columns:10px minmax(0,1fr) auto;gap:8px;align-items:center;font-size:15px}
+.gl i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.gform{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:16px}
+.gform #gc{grid-column:1/-1}
+.gform .btn{grid-column:1/-1}
+.glist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.glist li{display:grid;grid-template-columns:44px minmax(0,1fr) auto 32px;gap:12px;align-items:center;background:var(--card);border-radius:20px;padding:10px 10px 10px 12px}
+.glist .ic{background:color-mix(in srgb,var(--c) 18%,var(--card));color:var(--c)}
+.glist small{display:block;color:var(--soft);font-size:13.5px}
+.glist b{white-space:nowrap}
+.glist button{border:0;background:none;color:var(--soft);font-size:20px;min-height:36px;cursor:pointer}
+.empty{text-align:center;padding:24px 10px;color:var(--soft);background:var(--card);border-radius:24px}
+/* barra */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));padding:0 max(16px,calc((100% - 520px)/2 + 16px)) env(safe-area-inset-bottom);background:var(--dark);border-radius:22px 22px 0 0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-items:center;z-index:9;box-shadow:0 -6px 20px -12px rgb(0 0 0/.4)}
+nav.tabs button{border:0;background:none;color:#a7a2ad;height:44px;width:64px;border-radius:22px;display:grid;place-items:center;cursor:pointer;transition:background .2s,color .2s}
+nav.tabs svg{width:23px;height:23px}
+nav.tabs button[aria-selected=true]{background:var(--coral);color:#fff}
+:focus-visible{outline:3px solid color-mix(in srgb,var(--coral) 60%,transparent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.sec.open .txt{animation:none}*{scroll-behavior:auto}}
+@media(min-width:600px){.car{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr));overflow:visible}.cc{width:auto;max-width:none}}
+@media(max-width:380px){.phr,.docs{grid-template-columns:minmax(0,1fr)}.gtop{grid-template-columns:minmax(0,1fr)}.donut{margin:0 auto}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="s-viaje">
+  <div class="bnr" aria-hidden="true"><img src="fotos/madrid.jpg" alt=""><img src="fotos/florencia.jpg" alt=""><img src="fotos/venecia.jpg" alt=""><img src="fotos/paris.jpg" alt="">
+    <div class="rt"><span style="left:0"></span><span style="left:33.3%"></span><span style="left:66.6%"></span><span style="left:100%"></span><i class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></i></div><span class="bcd" id="count"></span></div>
+  <div class="pad">
+    <div class="hd"><div class="av" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></div><div><small>Enero 2027</small><b>Europa secreta</b></div></div>
+    <h1>Madrid, Florencia, Venecia y París</h1>
+    <p class="lead">Del 4 al 25 de enero de 2027 · 21 noches</p>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="car" id="car"></div>
+  <div class="pad">
+    <h2><span id="nxt-h">Los primeros días</span><button type="button" data-open="Madrid">Ver todo</button></h2>
+    <div class="rows" id="next"></div>
+  </div>
+  <div class="pad"><h2>Escapadas</h2></div>
+  <div class="exc" id="exc"></div>
+  <div class="pad">
+    <div class="promo"><div><b id="promo-b"></b><p>Un lugar especial escondido en cada día del viaje.</p><button class="btn" type="button" data-tab="secretos">Ver mis secretos</button></div><div class="stars" aria-hidden="true"></div></div>
+    <p class="note" style="margin-top:16px">Lo marcado como <span class="prop">propuesta</span> está por confirmar contigo.</p>
+  </div>
+</section>
+
+<section id="s-city" hidden>
+  <div class="ph scrim hero" id="hero"></div>
+  <div class="sheet"><div class="grab"></div>
+    <div class="stats" id="stats"></div>
+    <h2>Día a día</h2>
+    <div id="cdays"></div>
+  </div>
+</section>
+
+<section id="s-secretos" hidden><div class="pad">
+  <h1 style="margin-top:6px">Tus secretos</h1>
+  <p class="lead">Lugares especiales, lejos de lo que ya conoces.</p>
+  <div class="prog"><i id="sbar"></i></div>
+  <p class="note" id="scount"></p>
+</div>
+<div class="chips" id="schips"></div>
+<div class="pad" style="margin-top:14px"><div class="sgrid" id="secrets"></div></div>
+</section>
+
+<section id="s-util" hidden><div class="pad">
+  <h1 style="margin-top:6px">Lo práctico</h1>
+  <p class="lead">Traslados, clima, maleta y lo que conviene tener a mano.</p>
+  <h2>Traslados</h2>
+  <div class="panel"><ul class="legs" id="legs"></ul></div>
+  <h2>Tiempo en enero</h2>
+  <div class="panel"><div class="wx" id="wx"></div><div class="ax"><span>-2°</span><span>6°</span><span>14°</span></div>
+  <p class="note" style="margin-top:12px">Mínimas y máximas de un enero normal. Abrigo, capas y calzado impermeable.</p></div>
+  <h2>La maleta</h2>
+  <div class="panel" id="pack"></div>
+  <h2>Frases útiles</h2>
+  <div class="phr" id="phr"></div>
+  <h2>Documentos y emergencias</h2>
+  <div class="docs">
+    <div class="panel"><div class="big">112</div><p style="margin-top:6px">Emergencias en España, Italia y Francia.</p></div>
+    <div class="panel"><p><b>Pasaporte chileno.</b> Sin visado para estancias cortas. Revisa el permiso ETIAS antes de salir en la <a class="lk" href="https://travel-europe.europa.eu/etias_en" target="_blank" rel="noopener">web de la UE</a>.</p></div>
+    <div class="panel"><p><b>Enchufes:</b> los de Chile sirven en los tres países. <b>Moneda:</b> euro.</p></div>
+    <div class="panel"><p><b>Hotel en Madrid:</b> reservado por Booking. <span class="prop">confirmar dirección</span></p></div>
+  </div>
+</div></section>
+
+<section id="s-gastos" hidden><div class="pad">
+  <h1 style="margin-top:6px">Tus gastos</h1>
+  <p class="lead">Presupuesto: entre 50 y 100 € al día, sin alojamiento.</p>
+  <div class="panel" style="margin-top:20px">
+    <div class="gtop"><div class="donut" id="donut"></div><div><p style="margin:0 0 10px" id="gsum"></p><div class="gl" id="gl"></div></div></div>
+    <form id="gform" class="gform" autocomplete="off">
+      <input type="text" id="gc" placeholder="Qué fue (cena, metro…)" aria-label="Concepto">
+      <input type="number" id="gi" placeholder="Importe €" inputmode="decimal" step="0.01" min="0" aria-label="Importe">
+      <select id="gcity" aria-label="Ciudad"><option>Madrid</option><option>Florencia</option><option>Venecia</option><option>París</option></select>
+      <button class="btn" type="submit">Añadir gasto</button>
+    </form>
+  </div>
+  <h2>Movimientos</h2>
+  <ul class="glist" id="glist"></ul>
+  <div class="empty" id="gempty">Aún no hay gastos. Se guardan solo en este teléfono.</div>
+</div></section>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="viaje" aria-selected="true" aria-label="Viaje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></button>
+  <button role="tab" data-tab="secretos" aria-selected="false" aria-label="Secretos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg></button>
+  <button role="tab" data-tab="util" aria-selected="false" aria-label="Práctico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5h6v2M4 12h16"/></svg></button>
+  <button role="tab" data-tab="gastos" aria-selected="false" aria-label="Gastos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10h18M16 15h2"/></svg></button>
+</nav>
+
+<script>
+{
+const C={Madrid:{c:"var(--mad)",s1:"#ffc39a",s2:"#c9483a",f:"madrid"},Florencia:{c:"var(--flo)",s1:"#ffd7a8",s2:"#a2694f",f:"florencia"},Venecia:{c:"var(--ven)",s1:"#ffc1c8",s2:"#3c7fa0",f:"venecia"},París:{c:"var(--par)",s1:"#f7b6d9",s2:"#5b4fa8",f:"paris"}};
+const NIGHTS=[["Madrid",5,4,9],["Florencia",5,9,14],["Venecia",4,14,18],["París",7,18,25]];
+const map=q=>"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q);
+/* f: foto propia del día (si existe en fotos/) */
+const DAYS=[
+ {d:4,c:"Madrid",t:"Llegada a Madrid",w:"Aterrizas por la mañana en Barajas",it:[["✈️","Llegada a Barajas por la mañana. Metro o taxi al centro."],["🏨","Hotel en Madrid (Booking).","",1],["🚶","Primer paseo suave: Puerta del Sol, Plaza Mayor y Mercado de San Miguel.","Plaza Mayor Madrid"]],s:["El jardín escondido de La Latina","El Jardín del Príncipe de Anglona es un pequeño jardín del siglo XVIII escondido tras una verja. Casi nadie entra.","Jardín del Príncipe de Anglona Madrid"]},
+ {d:5,c:"Madrid",t:"Palacio y Cabalgata de Reyes",w:"La noche más mágica de Madrid",it:[["🏛️","Palacio Real por la mañana, con entrada reservada.","Palacio Real de Madrid",1],["🎨","Tarde de museo: el Prado, solo las salas de Velázquez y Goya.","Museo del Prado"],["👑","Por la tarde-noche, la Cabalgata de los Reyes Magos recorre el centro."]],s:["El monasterio de las reinas","Las Descalzas Reales guardan tapices y tesoros detrás de una fachada sencilla. Solo se entra con visita guiada.","Monasterio de las Descalzas Reales"]},
+ {d:6,c:"Madrid",t:"Día de Reyes",w:"Festivo: roscón y Retiro",it:[["🥐","Desayuno de roscón de Reyes, el dulce del día."],["🌳","El Retiro: estanque y Palacio de Cristal.","Palacio de Cristal Retiro"],["ℹ️","Es festivo: muchas tiendas cierran."]],s:["La casa de un pintor de la luz","El Museo Sorolla es la casa-taller del pintor, con su jardín andaluz en pleno Madrid.","Museo Sorolla"]},
+ {d:7,c:"Madrid",f:"toledo",x:"Toledo",t:"Excursión a Toledo",w:"Pueblo con historia a 30 minutos en tren",it:[["🚄","Tren de alta velocidad a Toledo desde Atocha.","Estación de Atocha",1],["🏰","Catedral, judería y miradores sobre el Tajo.","Toledo"],["🍬","Prueba el mazapán de Toledo."]],s:["El mirador del Valle","Al otro lado del río, el Mirador del Valle regala la vista completa de Toledo. Al atardecer es inolvidable.","Mirador del Valle Toledo"]},
+ {d:8,c:"Madrid",t:"Madrid de libros y jazz",w:"Último día en Madrid",it:[["📚","Cuesta de Moyano: casetas de libros junto al Retiro.","Cuesta de Moyano"],["🛍️","Compras por el barrio de Salamanca o Malasaña."],["🎷","Noche de jazz en el Café Central, en la plaza del Ángel.","Café Central Madrid"]],s:["El mercado de los vecinos","El Mercado de San Fernando, en Lavapiés, es donde comen los madrileños: puestos pequeños y ambiente de barrio.","Mercado de San Fernando Madrid"]},
+ {d:9,c:"Florencia",t:"Vuelo a Florencia",w:"De Madrid a la Toscana",it:[["✈️","Vuelo Madrid → Florencia o Pisa.","",1],["🌅","Atardecer en el Ponte Vecchio.","Ponte Vecchio"]],s:["Las ventanitas del vino","Busca las «buchette del vino»: pequeñas ventanas en los palacios por donde antes se vendía vino. Algunas todavía sirven una copa.","Buchette del vino Firenze"]},
+ {d:10,c:"Florencia",t:"El Duomo desde arriba",w:"Cúpula, campanario y lampredotto",it:[["⛪","Subida a la cúpula de Brunelleschi, con hora reservada.","Duomo di Firenze",1],["🥪","Comida callejera: bocadillo de lampredotto en un puesto del mercado.","Mercato Centrale Firenze"],["🏛️","Paseo por la Piazza della Signoria."]],s:["La farmacia de los monjes","La Officina Profumo-Farmaceutica di Santa Maria Novella es una de las farmacias más antiguas del mundo. Entrar es como viajar siglos atrás.","Officina Profumo Farmaceutica Santa Maria Novella"]},
+ {d:11,c:"Florencia",t:"Oltrarno, el otro lado",w:"Artesanos, jardines y vistas",it:[["🔨","Talleres artesanos en los barrios de Santo Spirito y San Frediano.","Santo Spirito Firenze"],["🌿","Giardino Bardini y su vista sobre la ciudad.","Giardino Bardini"],["🌅","Atardecer en Piazzale Michelangelo.","Piazzale Michelangelo"]],s:["La iglesia sobre la colina","Sube un poco más, a San Miniato al Monte. Es tranquila, con una de las mejores vistas de Florencia, y a veces se oye el canto de los monjes.","San Miniato al Monte"]},
+ {d:12,c:"Florencia",f:"siena",x:"Siena y San Gimignano",t:"Siena y San Gimignano",w:"Pueblos de torres medievales",it:[["🚌","Excursión de día a Siena y San Gimignano.","San Gimignano",1],["🏰","Piazza del Campo en Siena y las torres de San Gimignano.","Piazza del Campo Siena"]],s:["El helado de las torres","En la plaza principal de San Gimignano hay heladerías famosas. Pide un sabor toscano y cómelo mirando las torres.","Piazza della Cisterna San Gimignano"]},
+ {d:13,c:"Florencia",t:"Florencia a tu ritmo",w:"Día libre con mercado local",it:[["🧺","Mercato di Sant'Ambrogio: más local y auténtico que el Central.","Mercato di Sant'Ambrogio"],["🍩","Bomboloni, los buñuelos rellenos de crema."],["🖼️","Si te apetece museo: los Uffizi con entrada reservada.","Galleria degli Uffizi",1]],s:["El pasillo secreto de los Medici","El Corredor Vasariano unía los palacios de los Medici por encima de la ciudad. Pregunta si se puede visitar en tus fechas.","Corridoio Vasariano"]},
+ {d:14,c:"Venecia",t:"Tren a Venecia",w:"Unas 2 horas en alta velocidad",it:[["🚄","Tren Florencia → Venecia Santa Lucia.","Venezia Santa Lucia",1],["🛶","Vaporetto por el Gran Canal hasta tu alojamiento.","Canal Grande Venezia"]],s:["La librería inundable","En la Libreria Acqua Alta los libros se guardan en góndolas y bañeras por si sube el agua.","Libreria Acqua Alta"]},
+ {d:15,c:"Venecia",t:"La Venecia escondida",w:"Escaleras, bacari y Cannaregio",it:[["🌀","Scala Contarini del Bovolo, una escalera de caracol en un patio escondido.","Scala Contarini del Bovolo"],["🍷","Ruta de bacari: cicchetti, las tapas venecianas, en Cannaregio.","Fondamenta della Misericordia"]],s:["El taller de góndolas","En el Squero di San Trovaso se construyen y reparan góndolas desde hace siglos. Míralo desde el otro lado del canal.","Squero di San Trovaso"]},
+ {d:16,c:"Venecia",f:"burano",x:"Burano y Torcello",t:"Burano y Torcello",w:"Islas de colores en vaporetto",it:[["🛥️","Vaporetto a Burano: casas de colores y encaje.","Burano"],["⛪","Torcello, la isla casi vacía donde empezó Venecia.","Torcello"]],s:["La isla del silencio","En Torcello viven muy pocas personas. Su catedral tiene mosaicos de hace casi mil años.","Cattedrale di Santa Maria Assunta Torcello"]},
+ {d:17,c:"Venecia",t:"Perderse en Castello",w:"Lejos de San Marco",it:[["🧭","Camina por Castello hasta los Giardini.","Castello Venezia"],["🥾","En invierno puede haber acqua alta: botas o cubrezapatos."],["🍩","Busca las frittelle, los buñuelos de carnaval, si ya han salido."]],s:["La calle más estrecha","Venecia tiene callejones de apenas un metro de ancho. Déjate perder sin mapa en Castello: es parte del viaje.","Castello Venezia"]},
+ {d:18,c:"París",t:"Vuelo a París",w:"De Venecia a la ciudad de la luz",it:[["✈️","Vuelo Venecia → París.","",1],["🌃","Paseo al anochecer por el Sena."]],s:["Las galerías cubiertas","Los pasajes del siglo XIX, como la Galerie Vivienne, son calles con techo de cristal, tiendas antiguas y suelos de mosaico.","Galerie Vivienne"]},
+ {d:19,c:"París",t:"Vitrales y Barrio Latino",w:"Sainte-Chapelle y jazz",it:[["✨","Sainte-Chapelle por la mañana: muros de vitrales.","Sainte-Chapelle",1],["📚","Shakespeare and Company y el Barrio Latino.","Shakespeare and Company"],["🎷","Jazz en Le Caveau de la Huchette, un sótano medieval.","Le Caveau de la Huchette"]],s:["El paseo sobre las vías","La Coulée verte René-Dumont es un jardín construido sobre una antigua vía de tren, a varios metros sobre la calle.","Coulée verte René-Dumont"]},
+ {d:20,c:"París",t:"Montmartre de verdad",w:"Viñedo, ateliers y miradores",it:[["🍇","El viñedo del Clos Montmartre y sus calles de artistas.","Clos Montmartre"],["❤️","El Muro de los Te quiero.","Le Mur des je t'aime"]],s:["El museo romántico","El Musée de la Vie romantique es una casita con jardín y salón de té al pie de Montmartre.","Musée de la Vie romantique"]},
+ {d:21,c:"París",f:"provins",x:"Provins",t:"Excursión a Provins",w:"Ciudad medieval a 1 h 30 en tren",it:[["🚆","Tren desde la Gare de l'Est.","Gare de l'Est",1],["🏰","Murallas, torre César y subterráneos medievales.","Provins"]],s:["La ciudad de las rosas","Provins es Patrimonio de la Humanidad y casi no tiene turistas en invierno. Prueba algo hecho con su famosa rosa.","Provins"]},
+ {d:22,c:"París",f:"versalles",x:"Versalles",t:"Versalles",w:"Palacio y jardines",it:[["👑","Palacio de Versalles con entrada reservada a primera hora.","Château de Versailles",1],["🌳","Paseo por los jardines y el Trianon."]],s:["La aldea de la reina","Detrás del Trianon está el Hameau de la Reine, la aldea de juguete de María Antonieta.","Hameau de la Reine"]},
+ {d:23,c:"París",t:"El París de los barrios",w:"Canal Saint-Martin y Butte-aux-Cailles",it:[["🚲","Canal Saint-Martin: puentes de hierro y cafés.","Canal Saint-Martin"],["🎨","Butte-aux-Cailles: un pueblo dentro de París.","Butte-aux-Cailles"],["🥐","Pastelería Stohrer, la más antigua de París.","Stohrer Paris"]],s:["La calle de colores","La Rue Crémieux es una calle peatonal de casas pintadas de colores. Visítala temprano y en silencio: vive gente.","Rue Crémieux"]},
+ {d:24,c:"París",t:"Día libre en París",w:"Lo que te quedó pendiente",it:[["🛍️","Compras de última hora en el Marais.","Le Marais"],["🧆","Comida callejera: falafel en la rue des Rosiers.","Rue des Rosiers"],["🌃","Última noche: crucero por el Sena iluminado."]],s:["El museo de las ferias","El Musée des Arts Forains guarda tiovivos y atracciones antiguas que todavía funcionan. Solo con reserva.","Musée des Arts Forains"]},
+ {d:25,c:"París",t:"Vuelta a casa",w:"Vuelo por la noche",it:[["🧳","Mañana tranquila y maletas."],["✈️","Vuelo de vuelta por la noche.","",1]],s:["Una última cosa","Antes de ir al aeropuerto, compra un macaron para el avión. Es tradición."]}
+];
+const P={plane:'<path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/>',train:'<rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 10h14M9 13h.01M15 13h.01M8 19l-2 2M16 19l2 2"/>',bus:'<rect x="4" y="4" width="16" height="13" rx="2"/><path d="M4 11h16M7 20v-3M17 20v-3"/>',boat:'<path d="M3 16h18l-2.5 4h-13zM12 4v12M12 5l6 8h-6"/>',walk:'<circle cx="13" cy="4" r="2"/><path d="M9 21l3-7 3 3v5M7 12l4-4h3l2 4 2 1M11 8l1 6"/>',bed:'<path d="M3 19V7M3 15h18v4M21 15v-2a3 3 0 0 0-3-3h-7v5"/><circle cx="7" cy="12" r="2"/>',cols:'<path d="M3 21h18M4 18h16M12 3l9 6H3zM6 9v9M10 9v9M14 9v9M18 9v9"/>',art:'<path d="M12 3a9 9 0 1 0 0 18c1.1 0 2-.8 2-1.9 0-1.4-1.1-1.6-1.1-2.7 0-1 .8-1.6 1.8-1.6H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',crown:'<path d="M3 19h18M4 16L3 7l5 4 4-7 4 7 5-4-1 9z"/>',cake:'<path d="M4 20h16v-7H4zM4 16c2 1.2 4 1.2 6 0s4-1.2 6 0 3 1.2 4 0M12 13V9M12 4c1 1 1 2.2 0 3-1-.8-1-2 0-3"/>',tree:'<path d="M12 22v-5M12 2l6 8h-3l4 6H5l4-6H6z"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/>',castle:'<path d="M4 21V9h3V6h2v3h2V6h2v3h2V6h2v3h3v12zM10 21v-4a2 2 0 0 1 4 0v4"/>',book:'<path d="M4 19V5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0 0 4h13v-2"/>',bag:'<path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"/>',note:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',food:'<path d="M7 3v18M5 3v5a2 2 0 0 0 4 0V3M17 21V3c-2 1-3 4-3 7h3"/>',wine:'<path d="M8 3h8l-.5 6a3.5 3.5 0 0 1-7 0zM12 12.5V20M8 21h8"/>',sun:'<path d="M3 18h18M7 18a5 5 0 0 1 10 0M12 6v3M5 10l2 2M19 10l-2 2M3 14h2M19 14h2"/>',moon:'<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',heart:'<path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/>',case:'<rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5h6v2M4 12h16"/>',spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.6 1.6 1.6.6-1.6.6-.6 1.6-.6-1.6-1.6-.6 1.6-.6z"/>',tool:'<path d="M14.5 6.5l3 3M3 21l8.5-8.5M13 4l7 7 1.5-1.5-7-7z"/>',bike:'<circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h5l3 8M10 9l2 8M13 6h3"/>',church:'<path d="M12 2v5M10 4h4M6 21V12l6-5 6 5v9zM10 21v-4a2 2 0 0 1 4 0v4"/>',stairs:'<path d="M4 20h4v-4h4v-4h4V8h4"/>',star:'<path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/>',pin:'<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',arrow:'<path d="M7 17L17 7M9 7h8v8"/>',back:'<path d="M15 5l-7 7 7 7"/>',chev:'<path d="M9 6l6 6-6 6"/>',lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'};
+const EM={"✈️":"plane","🏨":"bed","🚶":"walk","🏛️":"cols","🎨":"art","👑":"crown","🥐":"cake","🌳":"tree","ℹ️":"info","🚄":"train","🚆":"train","🏰":"castle","🍬":"cake","📚":"book","🛍️":"bag","🎷":"note","⛪":"church","🥪":"food","🔨":"tool","🌿":"tree","🌅":"sun","🚌":"bus","🧺":"bag","🍩":"cake","🖼️":"art","🛶":"boat","🛥️":"boat","🌀":"stairs","🍷":"wine","🍇":"wine","🧭":"compass","🥾":"info","🌃":"moon","✨":"spark","❤️":"heart","🚲":"bike","🧆":"food","🧳":"case"};
+const ico=(k,w)=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w||1.9}" stroke-linecap="round" stroke-linejoin="round">${P[k]||P.info}</svg>`;
+
+/* ilustración provisional (se ve si falta la foto) */
+function far(seed){let s=seed,o="";const r=()=>(s=s*16807%2147483647)/2147483647;for(let x=-10;x<610;){const w=18+r()*30,h=30+r()*45;o+=`<rect x="${x.toFixed(1)}" y="${(200-h).toFixed(1)}" width="${(w-2).toFixed(1)}" height="${h.toFixed(1)}"/>`;x+=w}return o}
+const SKY={
+Madrid:`<g fill="#3a1820" fill-opacity=".28">${far(11)}</g><g fill="#2a1018" fill-opacity=".62"><rect x="150" y="140" width="130" height="60"/><rect x="186" y="128" width="58" height="14"/><path d="M196 128l19-10 19 10z"/><rect x="300" y="150" width="70" height="50"/><rect x="380" y="98" width="52" height="102"/><rect x="388" y="82" width="36" height="18"/><path d="M384 84q22-36 44 0z"/><rect x="404" y="42" width="4" height="10"/><rect x="440" y="140" width="80" height="60"/></g><g fill="#ffd2b0" fill-opacity=".5"><path d="M164 200v-26a10 10 0 0 1 20 0v26zM205 200v-34a10 10 0 0 1 20 0v34zM246 200v-26a10 10 0 0 1 20 0v26z"/></g>`,
+Florencia:`<path d="M0 160q120-30 250-8t350-14v62H0z" fill="#3b2a24" fill-opacity=".25"/><g fill="#3b2420" fill-opacity=".25">${far(23)}</g><g fill="#2c1914" fill-opacity=".62"><rect x="150" y="158" width="150" height="42"/><rect x="250" y="120" width="90" height="80"/><rect x="262" y="108" width="66" height="14"/><path d="M260 110q35-62 70 0z"/><rect x="291" y="56" width="8" height="12"/><rect x="356" y="76" width="22" height="124"/><rect x="352" y="70" width="30" height="8"/><rect x="396" y="150" width="70" height="50"/><ellipse cx="120" cy="178" rx="6" ry="24"/><ellipse cx="136" cy="182" rx="5" ry="19"/><ellipse cx="490" cy="176" rx="6" ry="25"/></g>`,
+Venecia:`<g fill="#1c2a44" fill-opacity=".25">${far(37)}</g><g fill="#18233a" fill-opacity=".6"><rect x="220" y="146" width="120" height="44"/><path d="M232 148a14 14 0 0 1 28 0zM266 146a16 16 0 0 1 32 0zM304 148a14 14 0 0 1 28 0z"/><rect x="362" y="90" width="22" height="100"/><rect x="358" y="84" width="30" height="10"/><path d="M358 84l15-28 15 28z"/></g><rect x="0" y="180" width="600" height="20" fill="#ffffff" fill-opacity=".2"/><path d="M130 186q60 12 140-4l5-9q-5 9-16 11-62 11-126-4z" fill="#18233a" fill-opacity=".7"/>`,
+París:`<g fill="#241a40" fill-opacity=".25">${far(53)}</g><g fill="#1e1638" fill-opacity=".62"><path d="M180 200v-30l8-10h60l8 10v30zM400 200v-34l8-10h70l8 10v34z"/><path d="M298 30h4l4 38 8 40 8 28 10 34h-14q-14-24-28 0h-14l10-34 8-28 8-40z"/></g>`};
+const ph=(c,f,cls,extra)=>`<div class="ph ${cls||""}" style="--s1:${C[c].s1};--s2:${C[c].s2}"><svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${SKY[c]}</svg><img src="fotos/${f||C[c].f}.jpg" alt="" loading="lazy">${extra||""}</div>`;
+function fixImgs(root){root.querySelectorAll(".ph img:not([data-k])").forEach(i=>{i.dataset.k=1;const ok=()=>i.naturalWidth?i.classList.add("ok"):i.remove();if(i.complete)ok();else{i.addEventListener("load",ok);i.addEventListener("error",()=>i.remove())}})}
+
+const WD=["dom","lun","mar","mié","jue","vie","sáb"];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const LS=k=>{try{return JSON.parse(localStorage.getItem("jaime-"+k))}catch(e){return null}};
+const SS=(k,v)=>{try{localStorage.setItem("jaime-"+k,JSON.stringify(v))}catch(e){}};
+const $=id=>document.getElementById(id);
+let opened=new Set(LS("secrets")||[]);
+
+/* cuenta atrás */
+const start=new Date(2027,0,4),now=new Date(),dd=Math.ceil((start-now)/864e5),onTrip=now>=start&&now<new Date(2027,0,26);
+$("count").innerHTML=dd>0?`<b>${dd}</b> días`:onTrip?`Día <b>${now.getDate()-3}</b>`:`<b>✓</b> hecho`;
+
+/* inicio */
+$("chips").innerHTML=`<button type="button" class="on" data-ch="">Todo</button>`+NIGHTS.map(([c])=>`<button type="button" data-ch="${c}">${c}</button>`).join("");
+$("chips").onclick=e=>{const b=e.target.closest("[data-ch]");if(!b)return;$("chips").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));
+  const car=$("car"),t=b.dataset.ch?car.querySelector(`[data-open="${b.dataset.ch}"]`):car.firstElementChild;if(car.scrollWidth>car.clientWidth)car.scrollTo({left:car.scrollLeft+t.getBoundingClientRect().left-car.getBoundingClientRect().left-20,behavior:"smooth"});renderNext(b.dataset.ch)};
+$("car").innerHTML=NIGHTS.map(([c,n,a,b])=>`<button type="button" class="cc" data-open="${c}">${ph(c,null,"scrim",`<span class="n">${a}–${b} ene</span><span class="tx"><b>${c}</b><span>${ico("pin",2)}${n} noches</span></span>`).replace('class="ph scrim"','class="ph scrim" style="--s1:'+C[c].s1+';--s2:'+C[c].s2+';height:100%;border-radius:inherit"')}</button>`).join("");
+/* ajuste: la tarjeta entera es la foto */
+$("car").querySelectorAll(".cc").forEach(b=>{const p=b.firstElementChild;b.style.position="relative";p.style.position="absolute";p.style.inset="0"});
+const rowHTML=x=>`<button type="button" class="row" data-open="${x.c}" data-day="${x.d}">${ph(x.c,x.f)}<span><span class="dt">${x.d} ene · ${WD[new Date(2027,0,x.d).getDay()]} · ${x.c}</span><b>${esc(x.t)}</b><small>${esc(x.w)}</small></span>${ico("chev",2)}</button>`;
+function renderNext(c){
+  let list=c?DAYS.filter(x=>x.c===c):DAYS.filter(x=>!onTrip||x.d>=now.getDate());
+  list=list.slice(0,c?9:4);
+  $("nxt-h").textContent=c?`Días en ${c}`:onTrip?"Hoy y lo que viene":"Los primeros días";
+  document.querySelector("[data-open][type=button]:not(.cc):not(.row)")?.setAttribute("data-open",c||"Madrid");
+  $("next").innerHTML=list.map(rowHTML).join("");fixImgs($("next"));
+}
+renderNext("");
+$("exc").innerHTML=DAYS.filter(x=>x.x).map(x=>`<button type="button" class="ex" data-open="${x.c}" data-day="${x.d}">${ph(x.c,x.f)}<b>${esc(x.x)}</b><small>${x.d} de enero · desde ${x.c}</small></button>`).join("");
+$("promo-b").textContent=`${DAYS.length-opened.size} secretos te esperan`;
+document.querySelector(".promo .stars").innerHTML=ico("star",1.8);
+
+/* vista de ciudad */
+let prevTab="viaje";
+function openCity(c,d){
+  const [,n,a,b]=NIGHTS.find(x=>x[0]===c),days=DAYS.filter(x=>x.c===c);
+  $("hero").style.cssText=`--s1:${C[c].s1};--s2:${C[c].s2}`;
+  $("hero").innerHTML=`<svg viewBox="0 0 600 200" preserveAspectRatio="xMidYMax slice" aria-hidden="true">${SKY[c]}</svg><img src="fotos/${C[c].f}.jpg" alt=""><button type="button" class="back" id="back" aria-label="Volver">${ico("back",2.2)}</button><div class="tx"><b>${c}</b><span>${ico("pin",2)}${a} – ${b} de enero · ${n} noches</span></div>`;
+  $("stats").innerHTML=`<div><small>Noches</small><b>${n}</b></div><div><small>Planes</small><b>${days.reduce((s,x)=>s+x.it.length,0)}</b></div><div><small>Secretos</small><b>${days.filter(x=>opened.has(x.d)).length}/${days.length}</b></div>`;
+  $("cdays").innerHTML=days.map(x=>`<article class="day${x.d===d?" open":""}" id="d${x.d}"><button type="button" aria-expanded="${x.d===d}"><span class="db"><b>${x.d}</b><small>${WD[new Date(2027,0,x.d).getDay()]}</small></span><span class="t"><b>${esc(x.t)}</b><small>${esc(x.w)}</small></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  <div class="det"><ul class="steps">${x.it.map(([i,t,pl,pr])=>`<li><span class="ic">${ico(EM[i])}</span><span class="tx">${esc(t)}${pr?'<span class="prop">propuesta</span>':""}${pl?` <a class="lk" href="${map(pl)}" target="_blank" rel="noopener">Mapa</a>`:""}</span></li>`).join("")}</ul>
+  <div class="sec${opened.has(x.d)?" open":""}" data-d="${x.d}"><div class="k">${ico("star",2)}Secreto del día</div><div class="lock"><p>Hay un lugar especial esperándote hoy.</p><button type="button" class="btn">Descubrir</button></div><div class="txt"><h3>${esc(x.s[0])}</h3><p>${esc(x.s[1])}</p>${x.s[2]?`<a class="lk" href="${map(x.s[2])}" target="_blank" rel="noopener">Ver en el mapa →</a>`:""}</div></div></div></article>`).join("");
+  fixImgs($("hero"));
+  show("city");
+  if(d)setTimeout(()=>$("d"+d).scrollIntoView({behavior:"smooth",block:"center"}),120);
+}
+$("s-city").onclick=e=>{
+  if(e.target.closest("#back")){setTab(prevTab);return}
+  const s=e.target.closest(".sec .btn");if(s){openSecret(+s.closest(".sec").dataset.d);return}
+  const h=e.target.closest(".day>button");if(h){const a=h.parentNode;a.classList.toggle("open");h.setAttribute("aria-expanded",a.classList.contains("open"))}};
+document.addEventListener("click",e=>{const o=e.target.closest("[data-open]");if(o&&!o.closest("#s-city"))openCity(o.dataset.open,+o.dataset.day||0);const t=e.target.closest("[data-tab]");if(t&&!t.closest("nav"))setTab(t.dataset.tab)});
+
+/* secretos */
+function openSecret(d){opened.add(d);SS("secrets",[...opened]);document.querySelectorAll(`.sec[data-d="${d}"]`).forEach(el=>el.classList.add("open"));renderSecrets();$("promo-b").textContent=`${DAYS.length-opened.size} secretos te esperan`;
+  const st=$("stats").lastElementChild;if(st&&!$("s-city").hidden){const c=DAYS.find(x=>x.d===d).c,ds=DAYS.filter(x=>x.c===c);st.querySelector("b").textContent=`${ds.filter(x=>opened.has(x.d)).length}/${ds.length}`}}
+let sf="";
+$("schips").innerHTML=`<button type="button" class="on" data-sf="">Todos</button>`+NIGHTS.map(([c])=>`<button type="button" data-sf="${c}">${c}</button>`).join("");
+$("schips").onclick=e=>{const b=e.target.closest("[data-sf]");if(!b)return;sf=b.dataset.sf;$("schips").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));renderSecrets()};
+function renderSecrets(){
+  $("scount").textContent=`${opened.size} de ${DAYS.length} secretos descubiertos`;$("sbar").style.width=opened.size/DAYS.length*100+"%";
+  $("secrets").innerHTML=DAYS.filter(x=>!sf||x.c===sf).map(x=>{const o=opened.has(x.d);return `<div class="sc${o?"":" lockd"}">${ph(x.c,x.f,"",`<span class="d">${x.d} ene</span>${o?"":`<span class="lk2">${ico("lock",2)}</span>`}`)}<div class="bd">${o?`<b>${esc(x.s[0])}</b><p>${esc(x.s[1])}</p>${x.s[2]?`<a class="lk" href="${map(x.s[2])}" target="_blank" rel="noopener">Ver en el mapa →</a>`:""}`:`<b>${x.c}</b><p>Un secreto para el ${x.d} de enero.</p><button type="button" class="open-b" data-sd="${x.d}">Descubrir</button>`}</div></div>`}).join("");
+  fixImgs($("secrets"));
+}
+$("secrets").onclick=e=>{const b=e.target.closest("[data-sd]");if(b)openSecret(+b.dataset.sd)};
+renderSecrets();
+
+/* traslados */
+const LEGS=[["4 ene","plane","Santiago → Madrid","Vuelo · llegas por la mañana",0],["9 ene","plane","Madrid → Florencia","Vuelo a Florencia o Pisa",1],["14 ene","train","Florencia → Venecia","Tren de alta velocidad, unas 2 h",1],["18 ene","plane","Venecia → París","Vuelo",1],["25 ene","plane","París → Santiago","Vuelo por la noche",0]];
+$("legs").innerHTML=LEGS.map(r=>`<li><span class="ic">${ico(r[1])}</span><span><b>${r[2]}</b>${r[4]?'<span class="prop">propuesta</span>':""}<small>${r[3]}</small></span><span class="w">${r[0]}</span></li>`).join("");
+const WX=[["Madrid",3,11],["Florencia",2,11],["Venecia",0,7],["París",3,8]],lo=-2,hi=14,pc=v=>(v-lo)/(hi-lo)*100;
+$("wx").innerHTML=WX.map(([c,a,b])=>`<div class="r" style="--c:${C[c].c}"><b>${c}</b><div class="tr"><i style="left:${pc(a)}%;width:${pc(b)-pc(a)}%"><span>${a}°</span><span>${b}°</span></i></div></div>`).join("");
+const PACK=["Pasaporte","Tarjeta y algo de efectivo en euros","Seguro de viaje","Abrigo y capas de ropa","Guantes, gorro y bufanda","Calzado cómodo e impermeable","Paraguas pequeño","Cargador y batería externa","Copias de reservas en el móvil"];
+let packed=new Set(LS("pack")||[]);
+$("pack").innerHTML=PACK.map((p,i)=>`<label class="chk"><input type="checkbox" data-i="${i}"${packed.has(i)?" checked":""}><span>${esc(p)}</span></label>`).join("");
+$("pack").onchange=e=>{const i=+e.target.dataset.i;e.target.checked?packed.add(i):packed.delete(i);SS("pack",[...packed])};
+const PH=[["Italiano","var(--flo)",[["Buongiorno","Buenos días"],["Grazie","Gracias"],["Per favore","Por favor"],["Il conto, per favore","La cuenta, por favor"],["Dov'è…?","¿Dónde está…?"],["Quanto costa?","¿Cuánto cuesta?"]]],["Francés","var(--par)",[["Bonjour","Buenos días"],["Merci","Gracias"],["S'il vous plaît","Por favor"],["L'addition, s'il vous plaît","La cuenta, por favor"],["Où est… ?","¿Dónde está…?"],["Combien ça coûte ?","¿Cuánto cuesta?"]]]];
+$("phr").innerHTML=PH.map(([l,c,r])=>`<div class="panel" style="--c:${c}"><h3><i></i>${l}</h3><dl>${r.map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join("")}</dl></div>`).join("");
+
+/* gastos */
+let G=LS("gastos")||[];
+const fmt=n=>n.toLocaleString("es-ES",{style:"currency",currency:"EUR"});
+function renderG(){
+  const tot=G.reduce((a,g)=>a+g.v,0),cap=100*22,by=NIGHTS.map(([c])=>[c,G.filter(g=>g.city===c).reduce((a,g)=>a+g.v,0)]);
+  let acc=0;const stops=tot?by.map(([c,v])=>{const s=acc;acc+=v/tot*360;return `${C[c].c} ${s}deg ${acc}deg`}).join(","):"var(--tint) 0deg 360deg";
+  $("donut").style.background=`conic-gradient(${stops})`;
+  $("donut").innerHTML=`<div><span><b>${fmt(tot)}</b><small>gastado</small></span></div>`;
+  $("gsum").innerHTML=`<b>${Math.round(tot/cap*100)}%</b> <span style="color:var(--soft)">del máximo de ${fmt(cap)}</span>`;
+  $("gl").innerHTML=by.map(([c,v])=>`<p style="--c:${C[c].c}"><i></i><span>${c}</span><b>${fmt(v)}</b></p>`).join("");
+  $("glist").innerHTML=G.map((g,i)=>`<li style="--c:${C[g.city].c}"><span class="ic">${ico("pin",2)}</span><span><b style="white-space:normal">${esc(g.c)}</b><small>${esc(g.city)}</small></span><b>${fmt(g.v)}</b><button type="button" data-del="${i}" aria-label="Borrar">×</button></li>`).join("");
+  $("gempty").hidden=!!G.length;
+}
+$("gform").onsubmit=e=>{e.preventDefault();const v=parseFloat($("gi").value);if(!(v>0))return;
+  G.unshift({c:$("gc").value.trim()||"Gasto",v,city:$("gcity").value});SS("gastos",G);$("gc").value="";$("gi").value="";renderG()};
+$("glist").onclick=e=>{const b=e.target.closest("[data-del]");if(b){G.splice(+b.dataset.del,1);SS("gastos",G);renderG()}};
+renderG();
+
+/* navegación */
+function show(id){document.querySelectorAll(".app>section").forEach(s=>s.hidden=s.id!=="s-"+id);window.scrollTo({top:0})}
+function setTab(t){prevTab=t;document.querySelectorAll("nav.tabs button").forEach(x=>x.setAttribute("aria-selected",x.dataset.tab===t));show(t)}
+document.querySelector("nav.tabs").onclick=e=>{const b=e.target.closest("[data-tab]");if(b)setTab(b.dataset.tab)};
+fixImgs(document);
+if(onTrip){const t=DAYS.find(x=>x.d===now.getDate());if(t)openCity(t.c,t.d)}
+}
+</script>
+</body>
+</html>
