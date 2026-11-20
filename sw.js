@@ -1,10 +1,10 @@
 /* Europa secreta: guarda la app en el móvil para usarla sin internet */
-const V = "europa-secreta-v3";
+const V = "europa-secreta-v4"; /* solo borra sus propias copias: en github.io todas las apps comparten el mismo sitio */
 const FILES = ["./", "index.html", "manifest.json", "icono.png", "icono-192.png", "favicon-32.png", "apple-touch-icon.png",
   "fotos/madrid.jpg", "fotos/florencia.jpg", "fotos/venecia.jpg", "fotos/paris.jpg",
   "fotos/toledo.jpg", "fotos/siena.jpg", "fotos/burano.jpg", "fotos/provins.jpg", "fotos/versalles.jpg"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
-self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
+self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("europa-secreta-") && k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener("fetch", e => {
   const r = e.request; if (r.method !== "GET") return;
   const font = /fonts\.(googleapis|gstatic)\.com/.test(r.url);
